@@ -10,7 +10,7 @@
 <meta property="og:url" content="https://addipoes.github.io/taxchart/wealth.html" />
 <meta name="description" content="Interaktive Animation der Vermögensverteilung in Deutschland nach Perzentilen, 1950–2025." />
 <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
-<link rel="stylesheet" href="styles.css?v=7" />
+<link rel="stylesheet" href="styles.css?v=8" />
 </head>
 <body>
 <main class="app">
@@ -55,10 +55,11 @@
   <section class="legend-notes">
     <h3>Wie lesen?</h3>
     <ul>
-      <li><strong>Oben &ndash; 1000 Personen:</strong> Jede Figur steht für etwa 80.000 Erwachsene in Deutschland. Die Farben zeigen Vermögensgruppen.</li>
-      <li><strong>Unten &ndash; 1000 Kuchenstücke:</strong> Das gesamte private Nettovermögen, verteilt nach Anteilen. Die Farben entsprechen den Gruppen oben.</li>
-      <li><strong>Kontrast:</strong> Wo die Bänder unterschiedlich breit sind, liegt Ungleichheit. Eine Person der "Reichsten 1 von 1000" hält mehr als 500 Personen der unteren Hälfte zusammen.</li>
-      <li>Die Animation zeigt, wie sich die Farbanteile im Vermögensband über die Jahrzehnte verschoben haben &ndash; die Personen-Aufteilung bleibt per Definition gleich.</li>
+      <li><strong>Links:</strong> Name und Größe der Vermögensschicht. Jedes Icon steht für etwa 80.000 Erwachsene.</li>
+      <li><strong>Mitte:</strong> Die Personen selbst, in fünf getrennten Bändern &ndash; von 500 grünen Icons (untere Hälfte) bis zum einen roten Icon (Top 0,1 %).</li>
+      <li><strong>Rechts:</strong> Wie viel Prozent des Gesamt-Nettovermögens die Gruppe besitzt. Balkenlänge direkt proportional.</li>
+      <li><strong>Disproportion:</strong> Ein kurzes grünes Band neben einem winzigen grünen Balken bedeutet &#132;viele Menschen, wenig Vermögen&#147;. Ein einziges rotes Icon neben einem langen roten Balken bedeutet das Gegenteil.</li>
+      <li>Die Animation 1950&ndash;2025 verändert die Balkenlängen &ndash; die Personenzahlen bleiben per Definition konstant.</li>
     </ul>
   </section>
 
@@ -79,6 +80,6 @@
 </main>
 
 <script src="wealth-data.js?v=2"></script>
-<script src="wealth-chart.js?v=2"></script>
+<script src="wealth-chart.js?v=4"></script>
 </body>
 </html>
