@@ -1,0 +1,257 @@
+:root {
+  --bg: #0f1419;
+  --bg-panel: #1a1f26;
+  --fg: #e8e9eb;
+  --fg-dim: #9aa0a8;
+  --accent: #e63946;
+  --accent-soft: #f07078;
+  --grid: #2b323c;
+  --grid-strong: #3a4250;
+  --good: #4ade80;
+  --warn: #fbbf24;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.app {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px 24px 64px;
+}
+
+.header h1 {
+  font-size: 28px;
+  line-height: 1.2;
+  margin: 0 0 8px;
+  letter-spacing: -0.01em;
+}
+
+.subtitle {
+  font-size: 20px;
+  margin: 0 0 8px;
+  color: var(--fg);
+}
+
+.byline {
+  color: var(--fg-dim);
+  margin: 0 0 24px;
+  font-size: 14px;
+  max-width: 720px;
+}
+
+.chart-wrapper {
+  position: relative;
+  background: var(--bg-panel);
+  border-radius: 12px;
+  padding: 20px 16px 12px;
+  margin-bottom: 16px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
+}
+
+#chart {
+  width: 100%;
+  height: 520px;
+}
+
+.year-display {
+  position: absolute;
+  top: 28px;
+  right: 32px;
+  text-align: right;
+  pointer-events: none;
+}
+
+.year-label {
+  font-size: 12px;
+  color: var(--fg-dim);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.year-value {
+  font-size: 56px;
+  font-weight: 700;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.btn {
+  background: var(--bg-panel);
+  color: var(--fg);
+  border: 1px solid var(--grid-strong);
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.btn:hover { background: #232a33; border-color: var(--fg-dim); }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: white; }
+.btn.primary:hover { background: var(--accent-soft); border-color: var(--accent-soft); }
+
+.speed {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--fg-dim);
+}
+
+.speed select {
+  background: var(--bg-panel);
+  color: var(--fg);
+  border: 1px solid var(--grid-strong);
+  border-radius: 6px;
+  padding: 6px 8px;
+  font-size: 14px;
+}
+
+#scrubber {
+  flex: 1;
+  min-width: 200px;
+  accent-color: var(--accent);
+}
+
+.annotation {
+  background: var(--bg-panel);
+  border-left: 4px solid var(--accent);
+  padding: 16px 20px;
+  border-radius: 0 8px 8px 0;
+  margin-bottom: 24px;
+  min-height: 72px;
+  transition: opacity 0.3s;
+}
+
+.annotation-text { margin: 0; font-size: 15px; }
+
+.legend-notes, .footer {
+  background: var(--bg-panel);
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin-top: 16px;
+}
+
+.legend-notes h3, .footer h3 {
+  margin: 0 0 12px;
+  font-size: 16px;
+}
+
+.legend-notes ul, .footer ul {
+  margin: 0;
+  padding-left: 20px;
+  color: var(--fg-dim);
+  font-size: 14px;
+}
+
+.legend-notes li, .footer li {
+  margin-bottom: 6px;
+}
+
+.footer em { color: var(--fg); font-style: italic; }
+
+.disclaimer {
+  margin-top: 14px;
+  font-size: 13px;
+  color: var(--fg-dim);
+  border-top: 1px solid var(--grid);
+  padding-top: 12px;
+}
+
+/* --- Chart SVG --- */
+
+.axis path, .axis line {
+  stroke: var(--grid);
+}
+
+.axis text {
+  fill: var(--fg-dim);
+  font-size: 12px;
+}
+
+.grid line {
+  stroke: var(--grid);
+  stroke-dasharray: 3 3;
+  opacity: 0.7;
+}
+
+.grid path { stroke: none; }
+
+.axis-label {
+  fill: var(--fg-dim);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.curve {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 3;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  filter: drop-shadow(0 2px 4px rgba(230, 57, 70, 0.35));
+}
+
+.curve.estimated {
+  stroke-dasharray: 2 6;
+  opacity: 0.85;
+}
+
+.point {
+  fill: var(--accent);
+  stroke: var(--bg-panel);
+  stroke-width: 2;
+}
+
+.point-label {
+  fill: var(--fg);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  text-anchor: middle;
+}
+
+.income-label {
+  fill: var(--accent-soft);
+  font-size: 11px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  text-anchor: middle;
+}
+
+.quality-badge {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--fg-dim);
+  margin-top: 8px;
+  font-weight: 500;
+}
+
+@media (max-width: 700px) {
+  .app { padding: 20px 12px; }
+  .header h1 { font-size: 22px; }
+  .subtitle { font-size: 16px; }
+  .year-value { font-size: 36px; }
+  .year-display { top: 20px; right: 20px; }
+  #chart { height: 380px; }
+}

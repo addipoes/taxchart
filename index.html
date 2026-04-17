@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Effektive Steuerlast nach Einkommen, Deutschland 1950–2025</title>
+<meta property="og:title" content="Effektive Steuerlast in Deutschland, 1950–2025" />
+<meta property="og:description" content="Interaktive Animation der effektiven Gesamtabgabenquote nach Einkommensgruppe – für jedes Jahr seit 1950." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://addipoes.github.io/taxchart/" />
+<meta name="description" content="Interaktive Animation der effektiven Gesamtabgabenquote nach Einkommensgruppe in Deutschland, 1950–2025." />
+<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+<link rel="stylesheet" href="styles.css?v=5" />
+</head>
+<body>
+<main class="app">
+  <header class="header">
+    <h1>Effektive Gesamtabgabenquote nach Einkommen</h1>
+    <p class="subtitle">Deutschland, 1950&ndash;2025</p>
+    <p class="byline">Steuern (Bundes-, Landes-, Kommunal- und indirekte Steuern) plus Sozialabgaben, als Anteil am Bruttoeinkommen.</p>
+  </header>
+
+  <section class="chart-wrapper">
+    <div id="chart"></div>
+    <div class="year-display">
+      <div class="year-label">Jahr</div>
+      <div class="year-value" id="year-big">1950</div>
+      <div class="quality-badge" id="quality-badge">Datenqualit&auml;t: rekonstruiert</div>
+    </div>
+  </section>
+
+  <section class="controls">
+    <button id="play" class="btn primary">Start</button>
+    <button id="reset" class="btn">Zurücksetzen</button>
+    <label class="speed">
+      Tempo
+      <select id="speed">
+        <option value="240">langsam</option>
+        <option value="120" selected>normal</option>
+        <option value="60">schnell</option>
+      </select>
+    </label>
+    <input id="scrubber" type="range" min="0" max="1" step="0.001" value="0" />
+  </section>
+
+  <section class="annotation" id="annotation">
+    <div class="annotation-text">Klick auf <strong>Start</strong>, um die Entwicklung über 75 Jahre zu sehen.</div>
+  </section>
+
+  <section class="legend-notes">
+    <h3>Wie lesen?</h3>
+    <ul>
+      <li>Je weiter rechts auf der X-Achse, desto höher das Einkommen (von unterem Dezil bis zu den reichsten ~400 Personen).</li>
+      <li>Die Y-Achse zeigt, welchen Anteil am Bruttoeinkommen eine Person dieser Gruppe als Steuern und Sozialabgaben abführt.</li>
+      <li>Ein <strong>steil ansteigender Verlauf</strong> bedeutet starke Progression: Hochverdiener zahlen prozentual deutlich mehr.</li>
+      <li>Eine <strong>am rechten Ende abfallende Kurve</strong> bedeutet Regression an der Spitze: Super-Reiche zahlen prozentual weniger als der obere Mittelstand.</li>
+    </ul>
+  </section>
+
+  <footer class="footer">
+    <h3>Datengrundlage</h3>
+    <ul>
+      <li>Bach, Beznoska, Steiner (2016): <em>Wer trägt die Steuerlast in Deutschland?</em> DIW Wochenbericht 51+52/2016 &mdash; Dezil- und Spitzenwerte 2015.</li>
+      <li>Bach, Corneo, Steiner (2013): <em>Effective Taxation of Top Incomes in Germany, 1992–2002.</em> DIW Discussion Paper 767 &mdash; Zeitreihe Top-Einkommen.</li>
+      <li>Beznoska (2020): <em>Die Verteilung von Steuern, Sozialabgaben und Transfereinkommen.</em> IW-Report 6/2020 &mdash; Referenzjahr 2019.</li>
+      <li>Jessen, Isaak, Jäger (2021): <em>Die Steuer- und Abgabenlast in Deutschland.</em> RWI/FNS &mdash; Referenzjahr 2018.</li>
+      <li>Destatis &amp; BMF: aggregierte Abgabenquote VGR 1950–2024; Tarifhistorie Einkommensteuer.</li>
+    </ul>
+    <p class="disclaimer">
+      Werte vor 1990 sind aus aggregierter Abgabenquote und Tarifhistorie rekonstruiert (keine Mikrodatenbasis für Deutschland vor den 1990ern). Belastbare Perzentildaten existieren ab Mitte der 1990er.
+      Die Einkommenswerte sind <strong>nominales Brutto-Jahreseinkommen pro Person</strong> (DM vor 2002 zu 0,5113&nbsp;€/DM umgerechnet, ohne Inflationsbereinigung). Historische Einzelwerte und die "Reichsten 400" sind Grobeinsch&auml;tzungen.
+      Visualisierung nach dem Vorbild von Robert Reichs <em>Effective Tax Rates by Income, 1950–2018</em> (USA).
+    </p>
+  </footer>
+</main>
+
+<script src="data.js?v=5"></script>
+<script src="chart.js?v=5"></script>
+</body>
+</html>
