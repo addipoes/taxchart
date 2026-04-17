@@ -321,6 +321,24 @@ html, body {
   opacity: 0.95;
 }
 
+.summary-separator {
+  stroke: var(--grid-strong);
+  stroke-width: 1;
+  stroke-dasharray: 2 4;
+  opacity: 0.6;
+}
+
+.summary-label { fill: var(--accent); }
+
+.summary-value {
+  font-weight: 800;
+  fill: var(--fg);
+}
+
+.wealth-bar-summary {
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.45));
+}
+
 @media (max-width: 700px) {
   .app { padding: 20px 12px; }
   .header h1 { font-size: 22px; }

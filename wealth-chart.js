@@ -21,8 +21,8 @@
   const LABEL_W = 130;      // linke Spalte (Gruppenname + Anzahl)
   const GRID_GAP = 24;      // Lücke zwischen Label und Icons
   const BAR_GAP = 28;       // Lücke zwischen Icons und Balken
-  const BAR_MAX = 150;      // max Balkenbreite in px
-  const BAR_SCALE = BAR_MAX / 40; // 40 % = volle Breite (max gemessen ~36,5 %)
+  const BAR_SCALE = 3.75;   // 1 % = 3,75 px (Einzelbänder max ~137 px)
+  const BAR_MAX = 270;      // reservierte Kanalbreite (deckt Summary bis ~70 %)
   const BAR_PAD = 12;       // Lücke Balken → Wert-Label
   const VALUE_W = 70;       // Platz für "33,8 %"
   const BAR_H = 20;
@@ -30,7 +30,18 @@
   // Zeilen pro Gruppe vorberechnen
   WEALTH_GROUPS.forEach((g) => { g.rows = Math.ceil(g.population / COLS); });
 
+  // Summary-Band: Top 10 % (= t9 + t09 + t01 zusammen, 100 Personen)
+  const SUMMARY = {
+    key: "top10",
+    label: "Top 10 % zusammen",
+    population: 100,
+    rows: Math.ceil(100 / COLS),
+    memberIdx: [2, 3, 4],
+  };
+  SUMMARY.bandH = SUMMARY.rows * CELL - ICON_GAP;
+
   // Vertikale Position jedes Bandes
+  const SUMMARY_GAP = 36; // größerer Abstand vor Summary-Band
   let yOff = 0;
   WEALTH_GROUPS.forEach((g, i) => {
     g.yBand = yOff;
@@ -38,6 +49,11 @@
     yOff += g.bandH;
     if (i < WEALTH_GROUPS.length - 1) yOff += BAND_GAP;
   });
+  const separatorY = yOff + SUMMARY_GAP / 2;
+  yOff += SUMMARY_GAP;
+  SUMMARY.yBand = yOff;
+  yOff += SUMMARY.bandH;
+
   const gridH = yOff;
   const gridW = COLS * CELL - ICON_GAP;
 
@@ -78,6 +94,8 @@
 
   const bars = [];
   const barValues = [];
+  let summaryBar;
+  let summaryVal;
 
   WEALTH_GROUPS.forEach((g) => {
     const gG = groupsG.append("g").attr("transform", `translate(0, ${g.yBand})`);
@@ -152,6 +170,67 @@
     barValues.push(val);
   });
 
+  // --- Summary-Band: Top 10 % zusammen ---
+  groupsG.append("line")
+    .attr("x1", xLabelEnd + 10)
+    .attr("x2", xBarStart + BAR_MAX + BAR_PAD + VALUE_W - 10)
+    .attr("y1", separatorY)
+    .attr("y2", separatorY)
+    .attr("class", "summary-separator");
+
+  const sG = groupsG.append("g").attr("transform", `translate(0, ${SUMMARY.yBand})`);
+  const sCenter = SUMMARY.bandH / 2;
+
+  sG.append("text")
+    .attr("x", xLabelEnd)
+    .attr("y", sCenter - 3)
+    .attr("class", "group-label summary-label")
+    .attr("text-anchor", "end")
+    .text(SUMMARY.label);
+  sG.append("text")
+    .attr("x", xLabelEnd)
+    .attr("y", sCenter + 15)
+    .attr("class", "group-count")
+    .attr("text-anchor", "end")
+    .text("100 Personen (10 %)");
+
+  const memberColors = SUMMARY.memberIdx.flatMap(idx =>
+    Array(WEALTH_GROUPS[idx].population).fill(WEALTH_GROUPS[idx].color)
+  );
+  memberColors.forEach((color, i) => {
+    const col = i % COLS;
+    const row = Math.floor(i / COLS);
+    sG.append("use")
+      .attr("href", "#person-icon")
+      .attr("x", xGrid + col * CELL)
+      .attr("y", row * CELL)
+      .attr("width", ICON_SIZE)
+      .attr("height", ICON_SIZE + 1)
+      .attr("fill", color)
+      .attr("class", "person-icon person-icon-summary");
+  });
+
+  const gradId = "summary-bar-gradient";
+  const grad = defs.append("linearGradient")
+    .attr("id", gradId)
+    .attr("x1", "0%").attr("x2", "100%")
+    .attr("y1", "0%").attr("y2", "0%");
+  grad.append("stop").attr("offset", "0%").attr("stop-color", WEALTH_GROUPS[2].color);
+  grad.append("stop").attr("offset", "70%").attr("stop-color", WEALTH_GROUPS[3].color);
+  grad.append("stop").attr("offset", "100%").attr("stop-color", WEALTH_GROUPS[4].color);
+
+  summaryBar = sG.append("rect")
+    .attr("x", xBarStart)
+    .attr("y", sCenter - BAR_H / 2)
+    .attr("height", BAR_H)
+    .attr("rx", 2)
+    .attr("fill", `url(#${gradId})`)
+    .attr("class", "wealth-bar wealth-bar-summary");
+
+  summaryVal = sG.append("text")
+    .attr("y", sCenter + 5)
+    .attr("class", "wealth-bar-value summary-value");
+
   // --- Render ---
   function render(year) {
     const shares = interpolateShares(year);
@@ -164,6 +243,13 @@
         .attr("x", xBarStart + w + BAR_PAD)
         .text(shares[i].toFixed(1).replace(".", ",") + " %");
     });
+
+    const sumShare = shares[2] + shares[3] + shares[4];
+    const sumW = Math.max(2, sumShare * BAR_SCALE);
+    summaryBar.attr("width", sumW);
+    summaryVal
+      .attr("x", xBarStart + sumW + BAR_PAD)
+      .text(sumShare.toFixed(1).replace(".", ",") + " %");
 
     const yearInt = Math.round(year);
     yearBig.textContent = yearInt;
