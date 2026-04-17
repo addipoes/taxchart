@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Vermögensverteilung in Deutschland, 1950–2025</title>
+<meta property="og:title" content="Vermögensverteilung in Deutschland, 1950–2025" />
+<meta property="og:description" content="Animierte Darstellung: Wer sind die Menschen und wem gehört wieviel Vermögen? 1000 Personen, jedes Jahr neu verteilt." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://addipoes.github.io/taxchart/wealth.html" />
+<meta name="description" content="Interaktive Animation der Vermögensverteilung in Deutschland nach Perzentilen, 1950–2025." />
+<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+<link rel="stylesheet" href="styles.css?v=7" />
+</head>
+<body>
+<main class="app">
+  <nav class="tabs">
+    <a href="index.html" class="tab">Steuerlast</a>
+    <a href="wealth.html" class="tab active">Vermögensverteilung</a>
+  </nav>
+
+  <header class="header">
+    <h1>Wem gehört Deutschland?</h1>
+    <p class="subtitle">Verteilung des Netto-Privatvermögens, 1950&ndash;2025</p>
+    <p class="byline">Stell dir 1000 Erwachsene in Deutschland vor. Wie viele gehören in welche Vermögensschicht &ndash; und wem gehört wieviel vom Kuchen?</p>
+  </header>
+
+  <section class="chart-wrapper">
+    <div id="wealth-chart"></div>
+    <div class="year-display">
+      <div class="year-label">Jahr</div>
+      <div class="year-value" id="year-big">1950</div>
+      <div class="quality-badge" id="quality-badge">Datenqualität: rekonstruiert</div>
+    </div>
+  </section>
+
+  <section class="controls">
+    <button id="play" class="btn primary">Start</button>
+    <button id="reset" class="btn">Zurücksetzen</button>
+    <label class="speed">
+      Tempo
+      <select id="speed">
+        <option value="240" selected>langsam</option>
+        <option value="120">normal</option>
+        <option value="60">schnell</option>
+      </select>
+    </label>
+    <input id="scrubber" type="range" min="0" max="1" step="0.001" value="0" />
+  </section>
+
+  <section class="annotation" id="annotation">
+    <div class="annotation-text">Klick auf <strong>Start</strong>, um zu sehen, wie sich Vermögensanteile über 75 Jahre verschieben.</div>
+  </section>
+
+  <section class="legend-notes">
+    <h3>Wie lesen?</h3>
+    <ul>
+      <li><strong>Oben &ndash; 1000 Personen:</strong> Jede Figur steht für etwa 80.000 Erwachsene in Deutschland. Die Farben zeigen Vermögensgruppen.</li>
+      <li><strong>Unten &ndash; 1000 Kuchenstücke:</strong> Das gesamte private Nettovermögen, verteilt nach Anteilen. Die Farben entsprechen den Gruppen oben.</li>
+      <li><strong>Kontrast:</strong> Wo die Bänder unterschiedlich breit sind, liegt Ungleichheit. Eine Person der "Reichsten 1 von 1000" hält mehr als 500 Personen der unteren Hälfte zusammen.</li>
+      <li>Die Animation zeigt, wie sich die Farbanteile im Vermögensband über die Jahrzehnte verschoben haben &ndash; die Personen-Aufteilung bleibt per Definition gleich.</li>
+    </ul>
+  </section>
+
+  <footer class="footer">
+    <h3>Datengrundlage</h3>
+    <ul>
+      <li>World Inequality Database (WID.world): Wealth shares Germany, 1913–2022.</li>
+      <li>Bach, Thiemann, Zucco (2018): <em>Looking for the Missing Rich.</em> DIW DP 1717 &ndash; korrigierte Spitzenwerte.</li>
+      <li>Grabka, Westermeier: <em>Vermögensverteilung in Deutschland.</em> DIW-Wochenberichte 2014, 2019, 2023.</li>
+      <li>Deutsche Bundesbank: <em>Private Haushalte und ihre Finanzen (PHF).</em> Wellen 2010, 2014, 2017, 2021.</li>
+      <li>Bartels, Schularick (2019): <em>The Distribution of Wealth in Germany, 1895–2018.</em></li>
+      <li>Piketty, Zucman (2014): <em>Capital is Back.</em></li>
+    </ul>
+    <p class="disclaimer">
+      Werte vor 1990 beziehen sich auf Westdeutschland, ab 1991 auf Gesamtdeutschland. Zahlen f&uuml;r Top&nbsp;0,1&nbsp;% sind mit Vorsicht zu lesen &ndash; Surveys untererfassen Spitzenverm&ouml;gen systematisch; wir folgen den "Missing Rich"-korrigierten Werten.
+    </p>
+  </footer>
+</main>
+
+<script src="wealth-data.js?v=2"></script>
+<script src="wealth-chart.js?v=2"></script>
+</body>
+</html>

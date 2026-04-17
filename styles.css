@@ -29,6 +29,31 @@ html, body {
   padding: 32px 24px 64px;
 }
 
+.tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--grid-strong);
+}
+
+.tab {
+  padding: 10px 18px;
+  color: var(--fg-dim);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.tab:hover { color: var(--fg); }
+
+.tab.active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
 .header h1 {
   font-size: 28px;
   line-height: 1.2;
@@ -245,6 +270,47 @@ html, body {
   color: var(--fg-dim);
   margin-top: 8px;
   font-weight: 500;
+}
+
+/* --- Pictograph (wealth.html) --- */
+
+.pict-heading {
+  fill: var(--fg-dim);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.pict-legend-text {
+  fill: var(--fg-dim);
+  font-size: 12px;
+}
+
+.wealth-segment-label {
+  fill: #0f1419;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.wealth-segment-sublabel {
+  fill: #0f1419;
+  font-size: 11px;
+  opacity: 0.85;
+}
+
+.top01-highlight {
+  fill: none;
+  stroke: var(--fg);
+  stroke-width: 1.5;
+}
+
+.top01-callout {
+  fill: var(--fg);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.person-icon {
+  opacity: 0.92;
 }
 
 @media (max-width: 700px) {
